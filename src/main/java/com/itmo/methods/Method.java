@@ -7,6 +7,7 @@ import java.util.function.Function;
 public abstract class Method implements Integrator {
     protected final double epsilon;
     protected final int k = 1;
+    protected double sign = 1;
 
     protected Function<Double, Double> f;
 
@@ -17,6 +18,12 @@ public abstract class Method implements Integrator {
 
     @Override
     public IntegrationResult integrate(double a, double b) {
+        if (a > b) {
+            this.sign *= -1;
+            double temp = a;
+            a = b;
+            b = temp;
+        }
         double prevResult;
         int n = 4;
         double result = doIntegration(a, b, n);
@@ -25,7 +32,7 @@ public abstract class Method implements Integrator {
             prevResult = result;
             result = doIntegration(a, b, n);
         } while (!isSolved(prevResult, result));
-        return new IntegrationResult(result, n);
+        return new IntegrationResult(sign * result, n);
     }
     protected abstract double doIntegration(double a, double b, int n);
 
