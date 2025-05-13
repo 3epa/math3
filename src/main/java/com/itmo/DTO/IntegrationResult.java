@@ -11,7 +11,7 @@ public class IntegrationResult {
         this.n = n;
     }
 
-    public String printResult() {
+    public String getFormattedResult() {
         DecimalFormat df = new DecimalFormat("0.######");
 
         return String.format(
