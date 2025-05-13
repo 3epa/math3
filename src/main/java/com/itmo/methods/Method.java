@@ -1,10 +1,12 @@
 package com.itmo.methods;
 
+import com.itmo.DTO.IntegrationResult;
+
 import java.util.function.Function;
 
 public abstract class Method implements Integrator {
     protected final double epsilon;
-    protected final double k = 1;
+    protected final int k = 1;
 
     protected Function<Double, Double> f;
 
@@ -14,15 +16,16 @@ public abstract class Method implements Integrator {
     }
 
     @Override
-    public double integrate(double a, double b, int n) {
+    public IntegrationResult integrate(double a, double b) {
         double prevResult;
+        int n = 4;
         double result = doIntegration(a, b, n);
         do {
             n *= 2;
             prevResult = result;
             result = doIntegration(a, b, n);
         } while (!isSolved(prevResult, result));
-        return result;
+        return new IntegrationResult(result, n);
     }
     protected abstract double doIntegration(double a, double b, int n);
 

@@ -1,5 +1,7 @@
 package com.itmo.methods;
 
+import com.itmo.DTO.IntegrationResult;
+
 public interface Integrator {
-    double integrate(double a, double b, int n);
+    IntegrationResult integrate(double a, double b);
 }
