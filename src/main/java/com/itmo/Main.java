@@ -2,12 +2,11 @@ package com.itmo;
 
 import com.itmo.DTO.FunctionHolder;
 import com.itmo.DTO.IntegrationResult;
+import com.itmo.exceptions.IncorrectInputException;
 import com.itmo.methods.*;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.function.Function;
 
 public class Main {
     public static void main(String[] args) {
@@ -36,7 +35,7 @@ public class Main {
             System.out.println("4. Метод трапеций");
             System.out.println("5. Метод Симпсона");
 
-            int methodChoice = chooseValue(reader);;
+            int methodChoice = chooseValue(reader);
 
             System.out.println("Введите точность:");
             double epsilon = inputValue(reader);
@@ -75,7 +74,7 @@ public class Main {
             try {
                 value = Integer.parseInt(reader.readLine());
                 if (value <= 0 || value >= 6) {
-                    throw new Exception("Введите значение от 1 до 5");
+                    throw new IncorrectInputException("Введите значение от 1 до 5");
                 }
                 break;
             } catch (NumberFormatException e) {
