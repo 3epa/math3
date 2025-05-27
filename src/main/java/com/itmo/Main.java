@@ -55,19 +55,13 @@ public class Main {
     }
 
     private static Integrator createIntegrator(int methodChoice, double epsilon, Function<Double, Double> function) {
-        switch (methodChoice) {
-            case 1:
-                return new LeftRectangleMethod(epsilon, function);
-            case 2:
-                return new RightRectangleMethod(epsilon, function);
-            case 3:
-                return new CenterRectangleMethod(epsilon, function);
-            case 4:
-                return new TrapezoidMethod(epsilon, function);
-            case 5:
-                return new SimpsonMethod(epsilon, function);
-            default:
-                throw new IllegalArgumentException("Неверный выбор метода интегрирования");
-        }
+        return switch (methodChoice) {
+            case 1 -> new LeftRectangleMethod(epsilon, function);
+            case 2 -> new RightRectangleMethod(epsilon, function);
+            case 3 -> new CenterRectangleMethod(epsilon, function);
+            case 4 -> new TrapezoidMethod(epsilon, function);
+            case 5 -> new SimpsonMethod(epsilon, function);
+            default -> throw new IllegalArgumentException("Неверный выбор метода интегрирования");
+        };
     }
 }

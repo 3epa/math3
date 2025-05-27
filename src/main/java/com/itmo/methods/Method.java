@@ -8,6 +8,7 @@ public abstract class Method implements Integrator {
     protected final double epsilon;
     protected final int k = 1;
     protected double sign = 1;
+    private final int MAX_ITERATIONS = 1_000_000_000;
 
     protected Function<Double, Double> f;
 
@@ -31,9 +32,13 @@ public abstract class Method implements Integrator {
             n *= 2;
             prevResult = result;
             result = doIntegration(a, b, n);
+            if (n > MAX_ITERATIONS) {
+                throw new RuntimeException("Слишком много итераций, не удалось достичь требуемой точности");
+            }
         } while (!isSolved(prevResult, result));
         return new IntegrationResult(sign * result, n);
     }
+
     protected abstract double doIntegration(double a, double b, int n);
 
     protected boolean isSolved(double I1, double I2) {
