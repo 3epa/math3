@@ -1,18 +1,18 @@
 package com.itmo.methods;
 
+import com.itmo.DTO.FunctionHolder;
 import com.itmo.DTO.IntegrationResult;
 
-import java.util.function.Function;
-
 public abstract class Method implements Integrator {
+    protected String name;
     protected final double epsilon;
-    protected final int k = 1;
+    protected final int k = 2;
     protected double sign = 1;
     private final int MAX_ITERATIONS = 1_000_000_000;
 
-    protected Function<Double, Double> f;
+    protected FunctionHolder f;
 
-    public Method(double epsilon, Function<Double, Double> f) {
+    public Method(double epsilon, FunctionHolder f) {
         this.epsilon = epsilon;
         this.f = f;
     }
@@ -36,12 +36,21 @@ public abstract class Method implements Integrator {
                 throw new RuntimeException("Слишком много итераций, не удалось достичь требуемой точности");
             }
         } while (!isSolved(prevResult, result));
-        return new IntegrationResult(sign * result, n);
+        result = sign * result;
+        return new IntegrationResult(a, b, f, getName(), result, n);
     }
 
     protected abstract double doIntegration(double a, double b, int n);
 
     protected boolean isSolved(double I1, double I2) {
-        return Math.abs(I1 - I2) / (Math.pow(2, k) - 1) <= epsilon;
+        return Math.abs(I1 - I2) / (Math.pow(2, getK()) - 1) <= epsilon;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getK() {
+        return k;
     }
 }

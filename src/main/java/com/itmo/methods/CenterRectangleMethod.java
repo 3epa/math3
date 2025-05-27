@@ -1,9 +1,11 @@
 package com.itmo.methods;
 
-import java.util.function.Function;
+import com.itmo.DTO.FunctionHolder;
+
 
 public class CenterRectangleMethod extends Method {
-    public CenterRectangleMethod(double epsilon, Function<Double, Double> f) {
+    protected String name = "Метод средних прямоугольников";
+    public CenterRectangleMethod(double epsilon, FunctionHolder f) {
         super(epsilon, f);
     }
 
@@ -13,10 +15,18 @@ public class CenterRectangleMethod extends Method {
         double sum = 0;
         for (int i = 0; i < n; i++) {
             double x = a + (i+0.5) * h;
-            sum += f.apply(x);
+            sum += f.getFunction().apply(x);
         }
         sum *= h;
         return sum;
     }
+    @Override
+    public String getName() {
+        return name;
+    }
 
+    @Override
+    public int getK() {
+        return super.getK();
+    }
 }

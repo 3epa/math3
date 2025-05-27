@@ -18,4 +18,9 @@ public class FunctionHolder {
     public Function<Double, Double> getFunction() {
         return function;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

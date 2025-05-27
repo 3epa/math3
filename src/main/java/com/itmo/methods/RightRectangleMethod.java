@@ -1,9 +1,12 @@
 package com.itmo.methods;
 
+import com.itmo.DTO.FunctionHolder;
+
 import java.util.function.Function;
 
 public class RightRectangleMethod extends Method {
-    public RightRectangleMethod(double epsilon, Function<Double, Double> f) {
+    protected String name = "Метод правых прямоугольников";
+    public RightRectangleMethod(double epsilon, FunctionHolder f) {
         super(epsilon, f);
     }
 
@@ -13,9 +16,18 @@ public class RightRectangleMethod extends Method {
         double sum = 0;
         for (int i = 1; i <= n; i++) {
             double x = a + i * h;
-            sum += f.apply(x);
+            sum += f.getFunction().apply(x);
         }
         sum *= h;
         return sum;
+    }
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public int getK() {
+        return super.getK();
     }
 }
